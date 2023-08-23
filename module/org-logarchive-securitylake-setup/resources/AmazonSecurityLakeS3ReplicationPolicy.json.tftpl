@@ -1,0 +1,50 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowReadS3ReplicationSetting",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetReplicationConfiguration",
+                "s3:GetObjectVersionForReplication",
+                "s3:GetObjectVersion",
+                "s3:GetObjectVersionAcl",
+                "s3:GetObjectVersionTagging",
+                "s3:GetObjectRetention",
+                "s3:GetObjectLegalHold"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::aws-security-data-lake*",
+                "arn:aws:s3:::aws-security-data-lake*/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "s3:ResourceAccount": [
+                        ${account_id}
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "AllowS3Replication",
+            "Action": [
+                "s3:ReplicateObject",
+                "s3:ReplicateDelete",
+                "s3:ReplicateTags",
+                "s3:GetObjectVersionTagging"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::aws-security-data-lake-*/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "s3:ResourceAccount": [
+                        ${account_id}
+                    ]
+                }
+            }            
+        }
+    ]
+}
