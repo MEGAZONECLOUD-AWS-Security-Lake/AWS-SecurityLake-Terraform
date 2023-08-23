@@ -1,0 +1,6 @@
+---
+-
+    unit: Core
+    name: LogArchive
+    email: mzc_securitylake_test+logarchive@megazone.com
+    securitylake_delegate: true
