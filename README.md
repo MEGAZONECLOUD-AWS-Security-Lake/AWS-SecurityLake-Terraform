@@ -1,5 +1,7 @@
 # MEGAZONECLOUD AWS Secrity Lake - Terraform Template
 
+ [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 This Terraform template target for AWS Security Lake service enablement on AWS Organizations. This repository have two module for the AWS services enabling and setup by each organization account. Let's look at below guide.
 
 ## Management Account on AWS Organizations
