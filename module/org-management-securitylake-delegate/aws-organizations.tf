@@ -7,16 +7,16 @@ resource "aws_organizations_organization" "org" {
 }
 
 resource "aws_organizations_organizational_unit" "ou" {
-  for_each  = toset([for member in local.org_member_list : member.unit])
+  for_each  = local.org_ou_map
   name      = each.key
   parent_id = aws_organizations_organization.org.roots[0].id
 }
 
 resource "aws_organizations_account" "member" {
 
-  for_each = {
+  for_each = length(local.org_member_list) > 0 ? {
     for member in local.org_member_list : trimspace(member.name) => { email = trimspace(member.email), unit = trimspace(member.unit) }
-  }
+  } : {}
 
   # A friendly name for the member account.
   # Minimum length of 1. Maximum length of 50.

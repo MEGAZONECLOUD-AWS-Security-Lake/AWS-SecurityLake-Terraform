@@ -5,14 +5,6 @@ terraform {
       version = ">= 5.7.0"
     }
   }
-
-  cloud {
-    organization = "MZC-ORG"
-
-    workspaces {
-      name = "CTC-3507-AWS-Organizations"
-    }
-  }
 }
 
 provider "aws" {

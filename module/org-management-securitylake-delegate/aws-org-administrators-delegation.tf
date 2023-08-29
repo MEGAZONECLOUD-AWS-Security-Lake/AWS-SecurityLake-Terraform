@@ -1,5 +1,5 @@
 resource "aws_cloudtrail" "cloudtrail-management" {
-  for_each = length(local.securitylake_admin) == 1 ? local.securitylake_admin : null
+  for_each = length(local.securitylake_admin) == 1 ? local.securitylake_admin : toset([])
 
   name           = var.cloudtrail_name
   s3_bucket_name = aws_s3_bucket.cloudtrail-management[each.key].id
@@ -25,14 +25,14 @@ resource "random_string" "random_suffix" {
 }
 
 resource "aws_s3_bucket" "cloudtrail-management" {
-  for_each      = length(local.securitylake_admin) == 1 ? local.securitylake_admin : null
+  for_each      = length(local.securitylake_admin) == 1 ? local.securitylake_admin : toset([])
   bucket        = "aws-cloudtrail-logs-${aws_organizations_account.member[each.key].id}-${random_string.random_suffix.result}"
   force_destroy = true
   depends_on    = [aws_organizations_account.member]
 }
 
 resource "aws_s3_bucket_policy" "cloudtrail-management" {
-  for_each = length(local.securitylake_admin) == 1 ? local.securitylake_admin : null
+  for_each = length(local.securitylake_admin) == 1 ? local.securitylake_admin : toset([])
   bucket   = aws_s3_bucket.cloudtrail-management[each.key].id
   policy = templatefile("resources/aws_s3_cloudtrail_permission.json.tftpl", {
     account_id  = data.aws_caller_identity.current.account_id
